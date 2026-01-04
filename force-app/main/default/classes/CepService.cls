@@ -44,6 +44,12 @@ public with sharing class CepService {
       );
     }
 
+    String body = response.getBody();
+    System.debug('JSON recebido: ' + body);
+    if (body.contains('"erro"')) {
+      throw new AuraHandledException('CEP não encontrado.');
+    }
+
     //armazenar a resposta em um objeto CepResponse
     CepResponse cepResponse;
 
