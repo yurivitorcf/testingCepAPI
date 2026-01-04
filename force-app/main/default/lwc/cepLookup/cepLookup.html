@@ -1,3 +1,42 @@
 <template>
-    
+  <lightning-card title="Search CEP" icon-name="utility:search">
+    <div class="slds-m-around_medium">
+      <lightning-input
+        label="CEP"
+        type="text"
+        value={cep}
+        maxlength="8"
+        onchange={handleCepChange}
+      >
+      </lightning-input>
+
+      <lightning-button
+        label="Search"
+        variant="brand"
+        onclick={handleSearch}
+        class="slds-m-top_small"
+      >
+      </lightning-button>
+
+      <template if:true={error}>
+        <div class="slds-text-color_error slds-m-top_small">{error}</div>
+      </template>
+
+      <template if:true={localEncontrado}>
+        <div class="slds-m-top_small">
+          <p><strong>Street:</strong> {logradouro}</p>
+          <p><strong>Neighborhood:</strong> {bairro}</p>
+          <p><strong>City:</strong> {localidade}</p>
+          <p><strong>State:</strong> {uf}</p>
+        </div>
+
+        <lightning-button
+          label="Create Address"
+          variant="brand"
+          onclick={handleCreateRecord}
+        >
+        </lightning-button>
+      </template>
+    </div>
+  </lightning-card>
 </template>
