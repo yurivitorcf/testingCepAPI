@@ -42,14 +42,18 @@ public with sharing class CepService {
     try {
       response = http.send(request);
     } catch (Exception e) {
-      throw new AuraHandledException(
+      AuraHandledException error = new AuraHandledException(
         'Erro ao conectar ao serviço: ' + e.getMessage()
       );
+      error.setMessage('Erro ao conectar ao serviço: ' + e.getMessage());
+      throw error;
     }
     if (response.getStatusCode() != 200) {
-      throw new AuraHandledException(
+      AuraHandledException e = new AuraHandledException(
         'Erro ao buscar CEP: ' + response.getStatus()
       );
+      e.setMessage('Erro ao buscar CEP: ' + response.getStatus());
+      throw e;
     }
 
     String body = response.getBody();

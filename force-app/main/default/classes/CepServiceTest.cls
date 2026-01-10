@@ -38,4 +38,33 @@ private class CepServiceTest {
       System.assertEquals('CEP deve conter 8 dígitos', e.getMessage());
     }
   }
+
+  @isTest
+  static void testCepNotFoundGetAddressFromCep() {
+    Test.setMock(HttpCalloutMock.class, new CepServiceHttpMock());
+
+    Test.startTest();
+    try {
+      CepService.getAddressFromCep('00000000');
+      System.assert(false, 'Esperava uma exceção');
+    } catch (AuraHandledException e) {
+      System.assertEquals('CEP não encontrado', e.getMessage());
+    }
+    Test.stopTest();
+  }
+
+  @isTest
+  static void testServerError() {
+    Test.setMock(HttpCalloutMock.class, new CepServiceHttpMock());
+
+    Test.startTest();
+    try {
+      CepService.getAddressFromCep('10000000');
+      System.assert(false, 'Esperava uma exceção');
+    } catch (AuraHandledException e) {
+      System.debug(e.getMessage() + 'ta aqui a mensagem ');
+      System.assert(e.getMessage().contains('Erro ao buscar CEP'));
+    }
+    Test.stopTest();
+  }
 }
