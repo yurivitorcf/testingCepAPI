@@ -26,6 +26,7 @@ private class CepServiceTest {
     // Testar CEP vazio
     try {
       CepService.getAddressFromCep('');
+      //System.assertEquals('CEP inválido', message); **não está funcionando
     } catch (Exception e) {
       exceptionCalled = true;
     }
@@ -34,5 +35,15 @@ private class CepServiceTest {
       exceptionCalled,
       'Deveria ter lançado exceção para CEP vazio'
     );
+  }
+
+  @isTest
+  static void testInvalidCepFormatGetAddressFromCep() {
+    try {
+      CepService.getAddressFromCep('123');
+      System.assert(false, 'Esperava uma exceção');
+    } catch (AuraHandledException e) {
+      System.assertEquals('CEP deve conter 8 dígitos', e.getMessage());
+    }
   }
 }

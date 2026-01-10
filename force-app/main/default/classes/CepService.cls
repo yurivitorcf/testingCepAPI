@@ -22,7 +22,10 @@ public with sharing class CepService {
     cep = cep.replaceAll('[^0-9]', '');
 
     if (cep.length() != 8) {
-      throw new AuraHandledException('CEP deve conter 8 dígitos');
+      //throw new AuraHandledException('CEP deve conter 8 dígitos');
+      AuraHandledException e = new AuraHandledException('CEP inválido');
+      e.setMessage('CEP deve conter 8 dígitos');
+      throw e;
     }
 
     Http http = new Http();
