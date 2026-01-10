@@ -20,21 +20,13 @@ private class CepServiceTest {
 
   @isTest
   static void testBlankGetAddressFromCep() {
-    //Tentei validar a mensagem mas por algum motivo não está funcionando. Solucionei apenas validando se a exceção foi lançada.
-    Boolean exceptionCalled = false;
-
     // Testar CEP vazio
     try {
       CepService.getAddressFromCep('');
-      //System.assertEquals('CEP inválido', message); **não está funcionando
-    } catch (Exception e) {
-      exceptionCalled = true;
+      System.assert(false, 'Esperava uma exceção');
+    } catch (AuraHandledException e) {
+      System.assertEquals('CEP inválido', e.getMessage());
     }
-
-    System.assert(
-      exceptionCalled,
-      'Deveria ter lançado exceção para CEP vazio'
-    );
   }
 
   @isTest

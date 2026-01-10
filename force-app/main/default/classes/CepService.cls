@@ -15,7 +15,10 @@ public with sharing class CepService {
   @AuraEnabled
   public static CepResponse getAddressFromCep(String cep) {
     if (String.isBlank(cep)) {
-      throw new AuraHandledException('CEP inválido');
+      //throw new AuraHandledException('CEP inválido');
+      AuraHandledException e = new AuraHandledException('CEP inválido');
+      e.setMessage('CEP inválido');
+      throw e;
     }
 
     //remover caracteres não numéricos
@@ -23,7 +26,9 @@ public with sharing class CepService {
 
     if (cep.length() != 8) {
       //throw new AuraHandledException('CEP deve conter 8 dígitos');
-      AuraHandledException e = new AuraHandledException('CEP inválido');
+      AuraHandledException e = new AuraHandledException(
+        'CEP deve conter 8 dígitos'
+      );
       e.setMessage('CEP deve conter 8 dígitos');
       throw e;
     }
@@ -50,7 +55,10 @@ public with sharing class CepService {
     String body = response.getBody();
     System.debug('JSON recebido: ' + body);
     if (body.contains('"erro"')) {
-      throw new AuraHandledException('CEP não encontrado.');
+      //throw new AuraHandledException('CEP não encontrado');
+      AuraHandledException e = new AuraHandledException('CEP não encontrado');
+      e.setMessage('CEP não encontrado');
+      throw e;
     }
 
     //armazenar a resposta em um objeto CepResponse
@@ -67,7 +75,10 @@ public with sharing class CepService {
       );
     }
     if (cepResponse == null) {
-      throw new AuraHandledException('CEP não encontrado');
+      //throw new AuraHandledException('CEP não encontrado');
+      AuraHandledException e = new AuraHandledException('CEP não encontrado');
+      e.setMessage('CEP não encontrado');
+      throw e;
     }
     return cepResponse;
   }
