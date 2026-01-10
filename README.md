@@ -1,18 +1,64 @@
-# Salesforce DX Project: Next Steps
+# CepService — Consulta de CEP com Apex e ViaCEP
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+Este repositório contém um serviço Apex para consulta de endereços brasileiros usando a API pública do ViaCEP.
 
-## How Do You Plan to Deploy Your Changes?
+O foco do projeto é mostrar uma integração externa simples em Apex, com tratamento de erros explícito e testes unitários bem isolados usando mock de callout HTTP.
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+É um projeto pequeno, mas pensado para ser fácil de entender, testar e evoluir.
 
-## Configure Your Salesforce DX Project
+## O que o serviço faz
+O fluxo do serviço é o seguinte:
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+1. Recebe um CEP como String
+2. Remove qualquer caractere que não seja numérico
+3. Valida se o CEP possui exatamente 8 dígitos
+4. Realiza o callout HTTP para o ViaCEP
+5. Trata alguns cenários comuns de erro:
+   - CEP inexistente (retorno com "erro": true)
+   - Status HTTP diferente de 200
+   - JSON malformado ou inesperado
+6. Retorna um objeto tipado (CepResponse) com os dados do endereço
 
-## Read All About It
+Quando ocorre qualquer erro, a exceção é lançada usando **AuraHandledException**, facilitando o consumo em LWC ou Aura.
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+## Estrutura do projeto
+
+1. CepService.cls
+2. CepServiceHttpMock.cls
+3. CepServiceTest.cls
+
+### CepService.cls
+
+Classe principal do serviço.  
+Responsável por:
+
+- Validar e normalizar o CEP
+- Montar e executar o callout
+- Interpretar a resposta da API
+- Centralizar o tratamento de erros
+
+A ideia foi manter toda a lógica de integração concentrada em um único lugar.
+
+### CepServiceHttpMock.cls
+
+Mock de callout HTTP utilizado nos testes.
+
+Simula diferentes respostas do ViaCEP, incluindo:
+
+- CEP válido
+- CEP inexistente
+- Erro HTTP 500
+- JSON malformado
+- Cenário padrão
+
+Isso garante que os testes não dependam de chamadas externas reais.
+
+### CepServiceTest.cls
+
+Classe de testes unitários cobrindo:
+
+- Consulta de CEP com sucesso
+- CEP vazio ou inválido
+- Tratamento de respostas de erro da API
+
+Os testes foram escritos pensando em previsibilidade e cobertura dos principais fluxos do serviço.
