@@ -74,9 +74,11 @@ public with sharing class CepService {
         CepResponse.class
       );
     } catch (Exception e) {
-      throw new AuraHandledException(
+      AuraHandledException error = new AuraHandledException(
         'Erro na resposta do serviço: ' + e.getMessage()
       );
+      error.setMessage('Erro na resposta do serviço');
+      throw error;
     }
     if (cepResponse == null) {
       //throw new AuraHandledException('CEP não encontrado');

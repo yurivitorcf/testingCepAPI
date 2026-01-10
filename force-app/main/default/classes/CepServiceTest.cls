@@ -67,4 +67,18 @@ private class CepServiceTest {
     }
     Test.stopTest();
   }
+
+  @isTest
+  static void testInvalidJsonGetAddressFromCep() {
+    Test.setMock(HttpCalloutMock.class, new CepServiceHttpMock());
+
+    Test.startTest();
+    try {
+      CepService.getAddressFromCep('12345678');
+      System.assert(false, 'Esperava uma exceção');
+    } catch (AuraHandledException e) {
+      System.assertEquals('Erro na resposta do serviço', e.getMessage());
+    }
+    Test.stopTest();
+  }
 }
