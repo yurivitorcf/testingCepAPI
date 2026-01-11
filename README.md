@@ -26,7 +26,7 @@ Quando ocorre qualquer erro, a exceção é lançada usando **AuraHandledExcepti
 - [HttpCalloutMock – Apex Reference](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref./apex_interface_httpcalloutmock.htm)
 - [Retornando erros em Apex para LWC/Aura](https://developer.salesforce.com/docs/atlas.en-us.lightning.meta/lightning/controllers_server_apex_custom_errors.htm)
 - [Named Credentials – Guia oficial](https://developer.salesforce.com/docs/platform/named-credentials/guide/get-started.html)
-- [Named Credentials – Salesforce Help](https://help.salesforce.com/s/articleView?id=xcloud.named_credentials_about.htm)
+- [Invoking HTTP Callouts -  Como fazer chamadas HTTP em Apex](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_classes_restful_http.htm)
 - [Mock de Callout – Conceitos gerais](https://apexprimer.com/apex-mock-testing)
 
 ## Estrutura do projeto
