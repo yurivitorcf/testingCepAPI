@@ -21,6 +21,14 @@ O fluxo do serviço é o seguinte:
 
 Quando ocorre qualquer erro, a exceção é lançada usando **AuraHandledException**, facilitando o consumo em LWC ou Aura.
 
+## Documentação oficial
+
+- [HttpCalloutMock – Apex Reference](https://developer.salesforce.com/docs/atlas.en-us.apexref.meta/apexref./apex_interface_httpcalloutmock.htm)
+- [Retornando erros em Apex para LWC/Aura](https://developer.salesforce.com/docs/atlas.en-us.lightning.meta/lightning/controllers_server_apex_custom_errors.htm)
+- [Named Credentials – Guia oficial](https://developer.salesforce.com/docs/platform/named-credentials/guide/get-started.html)
+- [Named Credentials – Salesforce Help](https://help.salesforce.com/s/articleView?id=xcloud.named_credentials_about.htm)
+- [Mock de Callout – Conceitos gerais](https://apexprimer.com/apex-mock-testing)
+
 ## Estrutura do projeto
 
 1. CepService.cls
@@ -62,3 +70,8 @@ Classe de testes unitários cobrindo:
 - Tratamento de respostas de erro da API
 
 Os testes foram escritos pensando em previsibilidade e cobertura dos principais fluxos do serviço.
+
+## CEP Lookup – Imagens de funcionamento
+
+<img width="702" height="1586" alt="cep_lookup_flow" src="https://github.com/user-attachments/assets/999691b3-ec6a-4a0b-af39-ba3fc24bae9a" />
+
